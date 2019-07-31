@@ -2,6 +2,7 @@
 
 
 a desktop console application for parsing JSON data of newsapi.org API.
+
 App. displays TOP-HEADLINES of world news (US is default).
 
 
