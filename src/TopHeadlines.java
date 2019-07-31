@@ -22,7 +22,7 @@ class Defaults {
     mx my ng nl no nz ph pl pt ro rs ru sa se sg
     si sk th tr tw ua us ve za
      */
-    private final static String srcCountry = "fr";
+    private final static String srcCountry = "us";
 
 
 
@@ -79,18 +79,17 @@ class Headline {
     public String getDate() {
         return date;
     }
-/*
+
     @Override
     public String toString() {
-        return "\t"+title.toUpperCase() +"\n\t\t~ "+author+" @ "+source+"\n\t\t~ "+date
-                + "\n\t" + getTabbedDesc(desc);
+        return "\t"+title.toUpperCase() + "\n\t>>> " + desc
+                +"\n\t\t~ "+author+" @ "+source+"\n\t\t~ "+formatDate(date)+"\n";
     }
 
-    private String getTabbedDesc(String desc) {
-        String res="";
+    private String formatDate(String date) {
+        return date.substring(0,10) + " , " + date.substring(11);
+    }
 
-        desc
-    }*/
 }
 
 interface OnDoneLoadingDataListener { void onDataLoaded(String jsonStr); }
@@ -100,21 +99,27 @@ class ParseData implements OnDoneLoadingDataListener {
     @Override
     public void onDataLoaded(String jsonStr) {
 
-        System.out.println(jsonStr); // for  check !
+        // System.out.println(jsonStr); // for  check !
 
-        /*
+
         if (jsonStr == null || jsonStr.isEmpty()) return;
 
         parseJSON(jsonStr);
+        displayHeadlineList(Defaults.headlineList);
 
-        // parse loaded data JSON here ! //
-        // also display it on console //
+
         // at end ask for refresh (r|R) or quit (any other key) ! //
 
-
-         */
     }
-/*
+
+    private void displayHeadlineList(List<Headline> headlineList) {
+
+        if(headlineList==null || headlineList.isEmpty()) return;
+
+        int i=1;
+        for(Headline h : headlineList) System.out.println((i++)+"."+h);
+    }
+
     private void parseJSON(String jsonStr) {
 
         JSONParser parser = new JSONParser();
@@ -133,23 +138,25 @@ class ParseData implements OnDoneLoadingDataListener {
                 {
                     JSONObject element = (JSONObject)o;
                     Defaults.headlineList.add(new Headline(
-                            ((JSONObject)element.get("source")).get("name"),
-
-                    ))
+                            safeGet(((JSONObject)element.get("source")).get("name")),
+                            safeGet(element.get("author")),
+                            safeGet(element.get("title")),
+                            safeGet(element.get("description")),
+                            safeGet(element.get("publishedAt"))
+                    ));
                 }
             }
-
-
-
-
-
-
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
-    */
+
+    private String safeGet(Object o)  // to bypass NPEs //
+    {
+        if(o==null) return "";
+        else return o.toString();
+    }
 
 }
 
@@ -216,6 +223,5 @@ public class TopHeadlines {
         loadDataObj.registerDataLoadingListener(mListener);
         loadDataObj.loadData();
         System.out.println("Loading Headlines ...");
-
     }
 }
