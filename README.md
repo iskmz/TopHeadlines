@@ -8,6 +8,7 @@ App. displays TOP-HEADLINES of world news (US is default).
 
 check DEFAULTS class (At the top) to change to your desired country 
 and to put your api-key to be able to use it
+
 get free api-key from newsapi.org ... 
 
 
