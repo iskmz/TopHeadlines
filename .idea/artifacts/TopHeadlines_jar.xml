@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TopHeadlines:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TopHeadlines_jar</output-path>
+    <root id="archive" name="TopHeadlines.jar">
+      <element id="module-output" name="TopHeadlines" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/json-simple-1.1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -25,7 +25,6 @@ class Defaults {
     private final static String srcCountry = "us";
 
 
-
     private final static String apiKey = "8b17debeb9694c3c8bbb2044c17a1231";
 
     public final static String srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
