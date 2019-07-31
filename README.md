@@ -13,6 +13,7 @@ get free api-key from newsapi.org ...
 
 
 Loading the JSON was done Asynchronously in a background thread, then was parsed after retrieval.
+
 Observer Design Pattern was used for this purpose.
 
 and the library json-simple was added and used for parsing.
