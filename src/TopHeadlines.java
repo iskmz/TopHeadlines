@@ -24,8 +24,7 @@ class Defaults {
      */
     private final static String srcCountry = "us";
 
-
-    private final static String apiKey = "8b17debeb9694c3c8bbb2044c17a1231";
+    private final static String apiKey = "XXXXXXX"; // put API-key here ! // get it from newsapi.org for free //
 
     public final static String srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
     public final static List<Headline> headlineList = new ArrayList<>();
