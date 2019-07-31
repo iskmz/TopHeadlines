@@ -15,7 +15,17 @@ class Defaults {
 
     private final static String endpoint = "https://newsapi.org/v2/top-headlines?";
 
-    private final static String srcCountry = "us";
+    /*
+    country options to choose from:-
+    ae ar at au be bg br ca ch cn co cu cz de eg
+    fr gb gr hk hu id ie il in it jp kr lt lv ma
+    mx my ng nl no nz ph pl pt ro rs ru sa se sg
+    si sk th tr tw ua us ve za
+     */
+    private final static String srcCountry = "fr";
+
+
+
     private final static String apiKey = "8b17debeb9694c3c8bbb2044c17a1231";
 
     public final static String srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
