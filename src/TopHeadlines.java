@@ -9,25 +9,37 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 class Defaults {
 
     private final static String endpoint = "https://newsapi.org/v2/top-headlines?";
+    private static String srcCountry = "us";
+    // put API-key here ! // get it from newsapi.org for free //
+    private final static String apiKey = "29c29c0f314f46caad255cab3b41d07a";
 
-    /*
-    country options to choose from:-
-    ae ar at au be bg br ca ch cn co cu cz de eg
-    fr gb gr hk hu id ie il in it jp kr lt lv ma
-    mx my ng nl no nz ph pl pt ro rs ru sa se sg
-    si sk th tr tw ua us ve za
-     */
-    private final static String srcCountry = "us";
-
-    private final static String apiKey = "XXXXXXX"; // put API-key here ! // get it from newsapi.org for free //
-
-    public final static String srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
+    public static String srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
     public final static List<Headline> headlineList = new ArrayList<>();
+
+    // country options to choose from:-
+    public final static String[] countries
+            = {"ae","ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn",
+            "co", "cu", "cz", "de", "eg", "fr" , "gb" , "gr", "hk", "hu",
+            "id", "ie", "il", "in", "it", "jp", "kr", "lt", "lv", "ma",
+            "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro",
+            "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw",
+            "ua", "us", "ve", "za"};
+
+    public static void setCountryCode(String choice) {
+        srcCountry = choice;
+        updateURL();
+    }
+
+    private static void updateURL() {
+        srcURL = endpoint+"country="+srcCountry+"&apiKey="+apiKey;
+    }
 }
 
 class Utils {
@@ -39,6 +51,36 @@ class Utils {
             else
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {}
+    }
+
+
+    public static void requestSrcCountry()
+    {
+        List<String> countryList = Arrays.asList(Defaults.countries);
+        String choice="";
+        boolean ok = false;
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("country codes:\t"+countryList+"\n");
+        do {
+            System.out.print("Enter country-code:  ");
+            choice = s.nextLine().toLowerCase();
+
+            ok = countryList.contains(choice);
+
+            if(!ok)
+            {
+                System.out.println("\n\t\t WRONG INPUT! \t country must be of the following list\n\t\t\t"+countryList);
+            }
+        } while (!ok);
+
+        Defaults.setCountryCode(choice);
+    }
+
+
+    public static void welcome() {
+        System.out.println("Welcome ....\n");
+        requestSrcCountry();
     }
 }
 
@@ -187,7 +229,6 @@ class LoadData {
 
     private String fetchDataFromSite() {
 
-
         String jsonStringElement = "";
         HttpURLConnection connection = null;
 
@@ -208,6 +249,7 @@ class LoadData {
         }
 
         return jsonStringElement;
+
     }
 
 }
@@ -215,6 +257,8 @@ class LoadData {
 public class TopHeadlines {
 
     public static void main(String[] args) {
+
+        Utils.welcome();
 
         LoadData loadDataObj = new LoadData();
         OnDoneLoadingDataListener mListener = new ParseData();
